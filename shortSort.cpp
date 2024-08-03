@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+#define bl cout<<endl;
 int main(){
     int t; cin>>t;
     while(t--){
