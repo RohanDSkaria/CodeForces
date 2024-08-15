@@ -12,13 +12,20 @@ using namespace std;
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
-
+const int m=1e9+7;
+int fn(vi &a){
+    int ans=INT_MIN,c=0;
+    for(int i:a) c=max(i,c+i),ans=max(ans,c);
+    return ans;
+}
 void solve(){
-    int n,k,c=0;cin>>n>>k;
-    vi a(k);cin>>a;
-    sort(all(a));
-    for(int i=0; i<k-1; i++) c+=(a[i]*2)-1;
-    cout<<c<<endl;
+    int n,k;cin>>n>>k;
+    vi a(n);cin>>a;
+    int ls=fn(a),sum=accumulate(all(a),0LL)-ls;
+    if(ls>0){
+        for(int i=0; i<k; i++) ls=(2*ls)%m;
+    }
+    cout<<((sum+ls)%m+m)%m<<endl;
 }
 int32_t main(){
     IOS int t=1;
@@ -26,8 +33,5 @@ int32_t main(){
     while(t--) solve();
 }
 /*
-1 1
-2 3
-3 5
-4 7
+
 */
