@@ -13,15 +13,15 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    int x,y,k;cin>>x>>y>>k;
-    v<vi> a(k,vi(2));
-    if(k&1){
-        for(int i=0,c=0; ; i++) a[i][0]=
+    int n;cin>>n;
+    vi a(n),b(n+2);cin>>a;
+    b[a[0]]=1;
+    for(int i=1; i<n; i++){
+        if(b[a[i]-1] || b[a[i]+1]) continue;
+        cout<<"NO"<<endl;
+        return;
     }
-    else{
-
-    }
-    for(auto i:a) cout<<i<<endl;
+    cout<<"YES"<<endl;
 }
 int32_t main(){
     IOS int t=1;
@@ -29,5 +29,6 @@ int32_t main(){
     while(t--) solve();
 }
 /*
-
+0 1 1 1 0 0
+0 1 2 3 4 5
 */
