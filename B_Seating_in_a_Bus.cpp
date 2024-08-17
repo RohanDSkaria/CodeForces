@@ -17,9 +17,11 @@ void solve(){
     vi a(n),b(n+2);cin>>a;
     b[a[0]]=1;
     for(int i=1; i<n; i++){
-        if(b[a[i]-1] || b[a[i]+1]) continue;
-        cout<<"NO"<<endl;
-        return;
+        if(b[a[i]-1] || b[a[i]+1]) b[a[i]]=1;
+        else{
+            cout<<"NO"<<endl;
+            return;
+        }
     }
     cout<<"YES"<<endl;
 }
