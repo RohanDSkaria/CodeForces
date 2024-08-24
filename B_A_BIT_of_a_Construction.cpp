@@ -13,12 +13,13 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    int x,y,k;cin>>x>>y>>k;
-    for(int i=1; i<=k/2; i++){
-        cout<<x+i<<" "<<y+i<<endl;
-        cout<<x-i<<" "<<y-i<<endl;
-    }
-    if(k&1) cout<<x<<" "<<y<<endl;
+    int n,k;cin>>n>>k;
+    if(n==1){cout<<k<<endl;return;}
+    vi a(n);
+    int g=__lg(k);
+    a[0]=(1<<g)-1;
+    a[1]=k-a[0];
+    cout<<a<<endl;
 }
 int32_t main(){
     IOS int t=1;
