@@ -14,32 +14,34 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    multimap<int,int> a,b,c;
+    char c;cin>>c;
+    string s;cin>>s;
+    bool ya=1,ya2=1;
     for(int i=0; i<n; i++){
-        int d;cin>>d;
-        a.insert({d,i});
-    }
-    for(int i=0; i<n; i++){
-        int d;cin>>d;
-        b.insert({d,i});
-    }
-    for(int i=0; i<n; i++){
-        int d;cin>>d;
-        c.insert({d,i});
-    }
-    int ans=-1,x=0;
-    for(auto it=a.rbegin(); x<3; it++,x++){
-        int y=0;
-        for(auto jt=b.rbegin(); y<3; jt++,y++){
-            int z=0;
-            for(auto kt=c.rbegin(); z<3; kt++,z++){
-                if(kt->second!=jt->second && kt->second!=it->second && jt->second!=it->second){
-                    ans=max(ans,kt->first+jt->first+it->first);
-                }
-            }
+        if(s[i]!=c){
+            ya=0;
+            if((i&1)) ya2=0;
         }
     }
-    cout<<ans<<endl;
+    if(ya) cout<<0<<endl;
+    else if(ya2) cout<<1<<endl<<2<<endl;
+    else if(s.back()==c) cout<<1<<endl<<n<<endl;
+    else{
+        for(int i=1; i<=n; i++){
+            ya=1;
+            for(int j=i; j<=n; j+=i){
+                if(s[j-1]!=c){
+                    ya=0;
+                    break;
+                }
+            }
+            if(ya){
+                cout<<1<<endl<<i<<endl;
+                return;
+            }
+        }
+        cout<<2<<endl<<n<<" "<<n-1<<endl;
+    }
 }
 int32_t main(){
     IOS int t=1;

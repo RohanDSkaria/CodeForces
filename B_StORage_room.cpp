@@ -14,32 +14,23 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    multimap<int,int> a,b,c;
+    v<vi> M(n,vi(n));cin>>M;
+    vi a(n,(1<<30)-1);
     for(int i=0; i<n; i++){
-        int d;cin>>d;
-        a.insert({d,i});
+        for(int j=i+1; j<n; j++){
+            a[i]&=M[i][j];
+            a[j]&=M[i][j];
+        }
     }
     for(int i=0; i<n; i++){
-        int d;cin>>d;
-        b.insert({d,i});
-    }
-    for(int i=0; i<n; i++){
-        int d;cin>>d;
-        c.insert({d,i});
-    }
-    int ans=-1,x=0;
-    for(auto it=a.rbegin(); x<3; it++,x++){
-        int y=0;
-        for(auto jt=b.rbegin(); y<3; jt++,y++){
-            int z=0;
-            for(auto kt=c.rbegin(); z<3; kt++,z++){
-                if(kt->second!=jt->second && kt->second!=it->second && jt->second!=it->second){
-                    ans=max(ans,kt->first+jt->first+it->first);
-                }
+        for(int j=i+1; j<n; j++){
+            if(M[i][j]!=(a[i]|a[j])){
+                cout<<"NO"<<endl;
+                return;
             }
         }
     }
-    cout<<ans<<endl;
+    cout<<"YES"<<endl<<a<<endl;
 }
 int32_t main(){
     IOS int t=1;
