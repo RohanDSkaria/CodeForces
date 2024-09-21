@@ -13,21 +13,22 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    int n,sum=0;cin>>n;
-    vi a(n);cin>>a;
-    set<int> set;
-    set.insert(0);
-    for(int i=0; i<n; i++){
-        if(i&1) a[i]*=-1;
-        sum+=a[i];
-        if(set.count(sum)){cout<<"YES"<<endl;return;}
-        set.insert(sum);
+    int n;cin>>n;
+    for(int i=1; i<6; i++){
+        string s;
+        for(int j=0; j<2*i; j++) s+=((j<i)?'4':'7');
+        do{
+            if(stoll(s)>=n){
+                cout<<s<<endl;
+                return;
+            }
+        }
+        while(next_permutation(all(s)));
     }
-    cout<<"NO"<<endl;
 }
 int32_t main(){
     IOS int t=1;
-    cin>>t;
+    // cin>>t;
     while(t--) solve();
 }
 /*

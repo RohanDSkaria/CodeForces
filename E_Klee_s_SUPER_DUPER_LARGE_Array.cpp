@@ -7,23 +7,26 @@ using namespace std;
 #define v vector
 #define vi v<int>
 #define bl cout<<endl;
-#define all(a) a.begin(),a.end()
+#define all(a) a.begin(),a.e()
 #define deb(x) cout<<#x<<" = "<<x<<endl;
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
-void solve(){
-    int n,sum=0;cin>>n;
-    vi a(n);cin>>a;
-    set<int> set;
-    set.insert(0);
-    for(int i=0; i<n; i++){
-        if(i&1) a[i]*=-1;
-        sum+=a[i];
-        if(set.count(sum)){cout<<"YES"<<endl;return;}
-        set.insert(sum);
+void solve() {
+    int n,k;cin>>n>>k;
+    int ans=(n+k)*(n+k-1)/2;
+    int s=k,e=n+k-1;
+    while(s<=e){
+        int m=s+(e-s)/2;
+        int p=(k-1)*k/2;
+        int sum=m*(m+1)/2-p;
+        int a = (n+k)*(n+k-1)/2 - 2*sum-p;
+        int b = abs(a);
+        if(b<ans) ans=b;
+        if(a<0) e=m-1;
+        else s=m+1;
     }
-    cout<<"NO"<<endl;
+    cout<<ans<<endl;
 }
 int32_t main(){
     IOS int t=1;

@@ -12,18 +12,34 @@ using namespace std;
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
-void solve(){
-    int n,sum=0;cin>>n;
-    vi a(n);cin>>a;
-    set<int> set;
-    set.insert(0);
-    for(int i=0; i<n; i++){
-        if(i&1) a[i]*=-1;
-        sum+=a[i];
-        if(set.count(sum)){cout<<"YES"<<endl;return;}
-        set.insert(sum);
+int helper(const vector<int>& a, int idx, const vector<int>& pre) {
+    int n = a.size();
+    int comp = idx / n;
+    int ans = comp * pre[n - 1];
+    idx = (idx % n);
+
+    int turn = comp % n;
+    int th = n - turn;
+
+    if (idx == 0) return ans;
+
+    if (idx > th) {
+        idx -= th;
+        ans += pre[n - 1] - pre[turn] + a[turn] + pre[idx - 1];
+    } else {
+        ans += pre[turn + idx - 1] - pre[turn] + a[turn];
     }
-    cout<<"NO"<<endl;
+    return ans;
+}
+void solve(){
+    int n,q;cin>>n>>q;
+    vi a(n),pre(n);cin>>a;
+    pre[0]=a[0];
+    for(int i=1; i<n; i++) pre[i]+=pre[i-1];
+    while(q--){
+        int l,r;cin>>l>>r;
+
+    }
 }
 int32_t main(){
     IOS int t=1;

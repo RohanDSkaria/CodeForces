@@ -13,17 +13,13 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    int n,sum=0;cin>>n;
-    vi a(n);cin>>a;
-    set<int> set;
-    set.insert(0);
-    for(int i=0; i<n; i++){
-        if(i&1) a[i]*=-1;
-        sum+=a[i];
-        if(set.count(sum)){cout<<"YES"<<endl;return;}
-        set.insert(sum);
-    }
-    cout<<"NO"<<endl;
+    int x,y,k;cin>>x>>y>>k;
+    int a=x/k + (x%k!=0);
+    int b=y/k + (y%k!=0);
+    int ans=0;
+    if(a>b) ans=2*a-1;
+    else ans=2*b;
+    cout<<ans<<endl;
 }
 int32_t main(){
     IOS int t=1;
