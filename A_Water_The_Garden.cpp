@@ -13,20 +13,10 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    int n;cin>>n;
-    vi a(n);cin>>a;
-    sort(all(a));
-    vi b;b.pb(a[0]);
-    int s=1,e=n-1;
-    for(int i=1; i<n; i++){
-        if(i&1) b.pb(a[e--]);
-        else b.pb(a[s++]);
-    }
-    int ans=a[0];
-    for(int i=1; i<n; i++){
-        b[i]=gcd(b[i],b[i-1]);
-        ans+=b[i];
-    }
+    int n,k;cin>>n>>k;
+    vi a(k);cin>>a;
+    int ans=max(a[0],n-a[k-1]+1);
+    for(int i=1; i<k; i++) ans=max(ans,(a[i]-a[i-1]+2)/2);
     cout<<ans<<endl;
 }
 int32_t main(){

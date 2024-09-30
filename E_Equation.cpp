@@ -12,28 +12,31 @@ using namespace std;
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
+double c;
+double y(double n){
+    return n*n + sqrt(n) - c;
+}
+double dy(double n){
+    double k=1.0/sqrt(n);
+    return 2*n + 0.5*k;
+}
 void solve(){
-    int n;cin>>n;
-    vi a(n);cin>>a;
-    sort(all(a));
-    vi b;b.pb(a[0]);
-    int s=1,e=n-1;
-    for(int i=1; i<n; i++){
-        if(i&1) b.pb(a[e--]);
-        else b.pb(a[s++]);
+    cin>>c;
+    double ans=c,ep=1e-6;
+    while(1){
+        double k=y(ans);
+        if(k<=ep) break;
+        ans=ans-k/dy(ans);
     }
-    int ans=a[0];
-    for(int i=1; i<n; i++){
-        b[i]=gcd(b[i],b[i-1]);
-        ans+=b[i];
-    }
-    cout<<ans<<endl;
+    cout<<fixed<<setprecision(6)<<ans;
 }
 int32_t main(){
     IOS int t=1;
-    cin>>t;
+    // cin>>t;
     while(t--) solve();
 }
 /*
+x = x - y/dy;
 
+ y(x)
 */

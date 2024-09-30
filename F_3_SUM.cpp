@@ -14,20 +14,23 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    vi a(n);cin>>a;
-    sort(all(a));
-    vi b;b.pb(a[0]);
-    int s=1,e=n-1;
-    for(int i=1; i<n; i++){
-        if(i&1) b.pb(a[e--]);
-        else b.pb(a[s++]);
+    vi a(10);
+    while(n--){
+        int x;cin>>x;
+        a[x%10]++;
     }
-    int ans=a[0];
-    for(int i=1; i<n; i++){
-        b[i]=gcd(b[i],b[i-1]);
-        ans+=b[i];
-    }
-    cout<<ans<<endl;
+    for(int i=0; i<=9; i++)
+        for(int j=0; j<=9; j++)
+            for(int k=0; k<=9; k++)
+                if((i+j+k)%10==3){
+                    a[i]--;a[j]--;a[k]--;
+                    if(a[i]>=0 && a[j]>=0 && a[k]>=0){
+                        cout<<"YES"<<endl;
+                        return;
+                    }
+                    a[i]++;a[j]++;a[k]++;
+                }
+    cout<<"NO"<<endl;
 }
 int32_t main(){
     IOS int t=1;

@@ -13,21 +13,26 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    int n;cin>>n;
+    int n,q;cin>>n>>q;
     vi a(n);cin>>a;
-    sort(all(a));
-    vi b;b.pb(a[0]);
-    int s=1,e=n-1;
-    for(int i=1; i<n; i++){
-        if(i&1) b.pb(a[e--]);
-        else b.pb(a[s++]);
+    vi b(n);
+    b[0]=n-1;
+    b[n-1]=n-1;
+    for(int i=1,j=n-2; i<=j; i++,j--){
+        b[i]+=(n-i)*(i+1)-1;
+        b[j]=b[i];
     }
-    int ans=a[0];
+    map<int,int> m;
+    m[b[0]]=a[1]-a[0];
     for(int i=1; i<n; i++){
-        b[i]=gcd(b[i],b[i-1]);
-        ans+=b[i];
+        m[b[i]]++;
+        if(i<n-1) m[b[i]-i]+=a[i+1]-a[i]-1;
     }
-    cout<<ans<<endl;
+    while(q--){
+        int x;cin>>x;
+        cout<<m[x]<<" ";
+    }
+    bl
 }
 int32_t main(){
     IOS int t=1;

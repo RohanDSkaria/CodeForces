@@ -14,20 +14,14 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    vi a(n);cin>>a;
-    sort(all(a));
-    vi b;b.pb(a[0]);
-    int s=1,e=n-1;
-    for(int i=1; i<n; i++){
-        if(i&1) b.pb(a[e--]);
-        else b.pb(a[s++]);
+    v<vi> a(n,vi(2));cin>>a;
+    int c=a[0][0];
+    for(int i=0; i<n; i++){
+        c=max(c,a[i][0]);
+        if(a[i][1]>=c) cout<<c++<<" ";
+        else cout<<0<<" ";
     }
-    int ans=a[0];
-    for(int i=1; i<n; i++){
-        b[i]=gcd(b[i],b[i-1]);
-        ans+=b[i];
-    }
-    cout<<ans<<endl;
+    bl
 }
 int32_t main(){
     IOS int t=1;

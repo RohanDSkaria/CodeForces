@@ -15,19 +15,11 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 void solve(){
     int n;cin>>n;
     vi a(n);cin>>a;
-    sort(all(a));
-    vi b;b.pb(a[0]);
-    int s=1,e=n-1;
+    int ans=INT_MAX;
     for(int i=1; i<n; i++){
-        if(i&1) b.pb(a[e--]);
-        else b.pb(a[s++]);
+        ans=min(ans,a[i]-a[i-1]);
     }
-    int ans=a[0];
-    for(int i=1; i<n; i++){
-        b[i]=gcd(b[i],b[i-1]);
-        ans+=b[i];
-    }
-    cout<<ans<<endl;
+    cout<<(ans<0?0:ans/2+1)<<endl;
 }
 int32_t main(){
     IOS int t=1;
