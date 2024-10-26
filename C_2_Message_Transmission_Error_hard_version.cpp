@@ -13,11 +13,12 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
+    string t;cin>>t;
     
 }
 int32_t main(){
     IOS int t=1;
-    cin>>t;
+    // cin>>t;
     while(t--) solve();
 }
 /*

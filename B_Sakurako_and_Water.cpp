@@ -3,7 +3,7 @@ using namespace std;
 #define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
 #define endl '\n'
 #define int long long
-#define pb(a) push_back(a)
+#define pb push_back
 #define v vector
 #define vi v<int>
 #define bl cout<<endl;
@@ -14,33 +14,29 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    string s;
-    bool pre=1,suf=0,ya;
-    while(1){
-        if(pre){
-            cout<<"? "<<s+'1'<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s+='1';
-            else{
-                cout<<"? "<<s+'0'<<endl;
-                cout.flush();
-                cin>>ya;
-                if(ya) s+='0';
-                else pre=0;
-            }
+    v<vi> a(n,vi(n));cin>>a;
+    vi b;
+    for(int i=n-1; i>=0; i--){
+        int j=0,k=i,mi=a[k][j];
+        while(k<n){
+            mi=min(mi,a[k][j]);
+            k++;
+            j++;
         }
-        else{
-            cout<<"? "<<'1'+s<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s='1'+s;
-            else s='0'+s;
-        }
-        if(s.size()==n) break;
+        b.pb(mi);
     }
-    cout<<"! "<<s<<endl;
-    cout.flush();
+    for(int j=1; j<n; j++){
+        int i=0,k=j,mi=a[i][k];
+        while(k<n){
+            mi=min(mi,a[i][k]);
+            k++;
+            i++;
+        }
+        b.pb(mi);
+    }
+    int ans=0;
+    for(int i:b) if(i<0) ans+=abs(i);
+    cout<<ans<<endl;
 }
 int32_t main(){
     IOS int t=1;

@@ -3,7 +3,7 @@ using namespace std;
 #define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
 #define endl '\n'
 #define int long long
-#define pb push_back
+#define pb(a) push_back(a)
 #define v vector
 #define vi v<int>
 #define bl cout<<endl;

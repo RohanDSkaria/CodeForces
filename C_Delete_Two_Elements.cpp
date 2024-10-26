@@ -13,7 +13,16 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    
+    int n;cin>>n;
+    vi a(n);cin>>a;
+    map<double,int> m;
+    int ans=0;
+    double k=(2*accumulate(all(a),0.0))/n;
+    for(int i=0; i<n; i++){
+        if(m.count(a[i])) ans+=m[a[i]];
+        m[k-a[i]]++;
+    }
+    cout<<ans<<endl;
 }
 int32_t main(){
     IOS int t=1;

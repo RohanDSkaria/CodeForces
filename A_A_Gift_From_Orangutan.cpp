@@ -13,7 +13,9 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    
+    int n;cin>>n;
+    vi a(n);cin>>a;
+    cout<<(*max_element(all(a))-*min_element(all(a)))*(n-1)<<endl;
 }
 int32_t main(){
     IOS int t=1;

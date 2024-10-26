@@ -13,7 +13,18 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    
+    int n,m,q;cin>>n>>m>>q;
+    vi a(n),b(m);cin>>a>>b;
+    set<int> s;
+    for(int i=0,j=0; i<m && j<n; i++){
+        if(s.count(b[i])) continue;
+        if(a[j]==b[i]) s.insert(a[j++]);
+        else{
+            cout<<"tidak"<<endl;
+            return;
+        }
+    }
+    cout<<"ya"<<endl;
 }
 int32_t main(){
     IOS int t=1;

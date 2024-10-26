@@ -13,7 +13,19 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    
+    int n;cin>>n;
+    vi a(n);cin>>a;
+    map<int,int> m;
+    m[0]=1;
+    int sum=0,ans=0;
+    for(int i=0; i<n; i++){
+        sum+=a[i];
+        if(sum==0) ans++;
+        else if(a[i]==0) ans++,sum=0;
+        else if(m.count(sum)) ans++,sum=0;
+        m[sum]=1;
+    }
+    cout<<ans<<endl;
 }
 int32_t main(){
     IOS int t=1;

@@ -3,7 +3,7 @@ using namespace std;
 #define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
 #define endl '\n'
 #define int long long
-#define pb push_back
+#define pb(a) push_back(a)
 #define v vector
 #define vi v<int>
 #define bl cout<<endl;
@@ -12,12 +12,21 @@ using namespace std;
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
+const int m=1e9+7;
+int fn(int n){
+    if(n==1) return 2;
+    int k=fn(n/2);
+    if(n&1) return (((k*k)%m)*2)%m;
+    return (k*k)%m;
+}
 void solve(){
-    
+    int n;cin>>n;
+    vi t(n),k(n);cin>>t>>k;
+    for(int i=0; i<n; i++) cout<<fn(k[i])<<endl;
 }
 int32_t main(){
     IOS int t=1;
-    cin>>t;
+    // cin>>t;
     while(t--) solve();
 }
 /*

@@ -13,7 +13,14 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    
+    int n;cin>>n;
+    string s;cin>>s;
+    bool oo=1,ee=0;
+    for(int i=0; i<n; i++){
+        if((s[i]&1) && !(i&1)) oo=0;
+        else if(!(s[i]&1) && (i&1)) ee=1;
+    }
+    cout<<((n&1)?oo:ee)+1<<endl;
 }
 int32_t main(){
     IOS int t=1;

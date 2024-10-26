@@ -13,34 +13,18 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
-    int n;cin>>n;
-    string s;
-    bool pre=1,suf=0,ya;
-    while(1){
-        if(pre){
-            cout<<"? "<<s+'1'<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s+='1';
-            else{
-                cout<<"? "<<s+'0'<<endl;
-                cout.flush();
-                cin>>ya;
-                if(ya) s+='0';
-                else pre=0;
-            }
+    int n,k;cin>>n>>k;
+    vi a(n);cin>>a;
+    vi p={0,INT_MAX};
+    for(int i=0; i<n; i++){
+        vi c = {a[i],(i==0||i==n-1)?a[i]:a[i]+k-1};
+        p={max(p[0]-k+1,c[0]),min(p[1]+k-1,c[1])};
+        if(p[0]>p[1]){
+            cout<<"NO"<<endl;
+            return;
         }
-        else{
-            cout<<"? "<<'1'+s<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s='1'+s;
-            else s='0'+s;
-        }
-        if(s.size()==n) break;
     }
-    cout<<"! "<<s<<endl;
-    cout.flush();
+    cout<<"YES"<<endl;
 }
 int32_t main(){
     IOS int t=1;

@@ -39,7 +39,7 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     string s;cin>>s;
-    deb(s)
+    
 }
 int main(){
     IOS

@@ -13,6 +13,9 @@ template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
 
 void solve(){
+    int n,m,k,w;cin>>n>>m>>k>>w;
+    vi a(w);cin>>a;
+    sort(all(a));
     
 }
 int32_t main(){

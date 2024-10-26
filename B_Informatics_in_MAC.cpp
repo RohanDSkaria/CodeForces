@@ -14,33 +14,31 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    string s;
-    bool pre=1,suf=0,ya;
-    while(1){
-        if(pre){
-            cout<<"? "<<s+'1'<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s+='1';
-            else{
-                cout<<"? "<<s+'0'<<endl;
-                cout.flush();
-                cin>>ya;
-                if(ya) s+='0';
-                else pre=0;
-            }
-        }
-        else{
-            cout<<"? "<<'1'+s<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s='1'+s;
-            else s='0'+s;
-        }
-        if(s.size()==n) break;
+    vi a(n);cin>>a;
+    vi pre(n),suf(n);
+    set<int> s;
+    int mex=0;
+    for(int i=0; i<n; i++){
+        s.insert(a[i]);
+        while(s.count(mex)) mex++;
+        pre[i]=mex;
     }
-    cout<<"! "<<s<<endl;
-    cout.flush();
+    s.clear();
+    mex=0;
+    for(int i=n-1; i>=0; i--){
+        s.insert(a[i]);
+        while(s.count(mex)) mex++;
+        suf[i]=mex;
+    }
+    // deb(pre)deb(suf)
+    int ans=-1;
+    for(int i=0; i<n-1; i++){
+        if(pre[i]==suf[i+1]) ans=i;
+    }
+    if(ans==-1){cout<<-1<<endl;return;}
+    cout<<2<<endl;
+    cout<<1<<" "<<ans+1<<endl;
+    cout<<ans+2<<" "<<n<<endl;
 }
 int32_t main(){
     IOS int t=1;

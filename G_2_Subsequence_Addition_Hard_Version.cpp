@@ -14,33 +14,16 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    string s;
-    bool pre=1,suf=0,ya;
-    while(1){
-        if(pre){
-            cout<<"? "<<s+'1'<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s+='1';
-            else{
-                cout<<"? "<<s+'0'<<endl;
-                cout.flush();
-                cin>>ya;
-                if(ya) s+='0';
-                else pre=0;
-            }
-        }
-        else{
-            cout<<"? "<<'1'+s<<endl;
-            cout.flush();
-            cin>>ya;
-            if(ya) s='1'+s;
-            else s='0'+s;
-        }
-        if(s.size()==n) break;
-    }
-    cout<<"! "<<s<<endl;
-    cout.flush();
+    vi a(n);cin>>a;
+    sort(all(a));
+    int c=count(all(a),1),M=a[n-1],m=a[n-2];
+    deb(M)deb(m)
+    if(M==1) cout<<"YES";
+    else if(c<2) cout<<"NO";
+    else if(M==2) cout<<"YES";
+    else if(M>2 && m>=2 || (M==3 && m==2)) cout<<"YES";
+    else cout<<"NO";
+    bl
 }
 int32_t main(){
     IOS int t=1;
