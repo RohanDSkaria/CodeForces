@@ -26,6 +26,8 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 void solve(){
     int n,m,k;cin>>n>>m>>k;
     vi a(n),b(m);cin>>a>>b;
+    map<int,int> mp,mb;
+    for(int i=0; i<m; i++) mp[a[i]]++,mb[b[i]]++;
     
 }
 int32_t main(){
