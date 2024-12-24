@@ -15,7 +15,7 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 const int m=1e9+7;
 void solve(){
     int n;cin>>n;
-
+    
 }
 int32_t main(){
     IOS int t=1;
@@ -23,19 +23,5 @@ int32_t main(){
     while(t--) solve();
 }
 /*
-1 1
-2 3
-3 3
-4 21
-
-D 3 3 2 D
-D A D 3 D
-D A B 2 D
-D A C 2 D
-
-D x x x x D
-D A D 3   D
-D A B x x D
-D A C x x D
 
 */

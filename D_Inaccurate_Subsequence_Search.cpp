@@ -25,10 +25,34 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n,m,k;cin>>n>>m>>k;
-    vi a(n),b(m);cin>>a>>b;
-    map<int,int> mp,mb;
-    for(int i=0; i<m; i++) mp[a[i]]++,mb[b[i]]++;
-    
+    vi a(n);cin>>a;
+    multiset<int> b,t,d;
+    for(int i=0,c; i<m; i++){
+        cin>>c;
+        b.insert(c);
+    }
+    for(int i=0; i<m; i++){
+        if(b.find(a[i])!=b.end()){
+            b.erase(b.find(a[i]));
+            t.insert(a[i]);
+        }
+        else d.insert(a[i]);
+    }
+    int ans=(t.size()>=k);
+    for(int i=m; i<n; i++){
+        if(d.find(a[i-m])!=d.end()) d.erase(d.find(a[i-m]));
+        else if(t.find(a[i-m])!=t.end()){
+            t.erase(t.find(a[i-m]));
+            b.insert(a[i-m]);
+        }
+        if(b.find(a[i])!=b.end()){
+            b.erase(b.find(a[i]));
+            t.insert(a[i]);
+        }
+        else d.insert(a[i]);
+        if(t.size()>=k) ans++;
+    }
+    cout<<ans<<endl;
 }
 int32_t main(){
     IOS
