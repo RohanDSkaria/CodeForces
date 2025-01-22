@@ -10,10 +10,11 @@
 			"#define pb push_back",
 			"#define v vector",
 			"#define vi v<int>",
-			"#define bl cout<<endl;",
 			"#define all(a) a.begin(),a.end()",
+			"#define rall(a) a.rbegin(),a.rend()",
 			"#define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);",
-			"template<typename F,typename S>ostream& operator<<(ostream& os,pair<F,S>& p){os<<\"{\"<<p.first<<\",\"<<p.second<<\"}\";return os;}",
+			"template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<\"{\"<<p.first<<\",\"<<p.second<<\"}\";}",
+			"template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}",
 			"template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}",
 			"template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}",
 			"template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}",
@@ -51,10 +52,11 @@
 			"#define pb push_back",
 			"#define v vector",
 			"#define vi v<int>",
-			"#define bl cout<<endl;",
 			"#define all(a) a.begin(),a.end()",
+			"#define rall(a) a.rbegin(),a.rend()",
 			"#define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);",
-			"template<typename F,typename S>ostream& operator<<(ostream& os,pair<F,S>& p){os<<\"{\"<<p.first<<\",\"<<p.second<<\"}\";return os;}",
+			"template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<\"{\"<<p.first<<\",\"<<p.second<<\"}\";}",
+			"template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}",
 			"template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}",
 			"template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}",
 			"template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}",
@@ -75,6 +77,104 @@
 			"/*",
 			"",
 			"*/"
+		]
+	},
+
+	"Binary Exponentiation":{
+		"prefix": "bix",
+		"body": [
+			"int po(int a, int b){int k=1;while(b){if(b&1)k*=a;a*=a;b>>=1;}return k;}",
+			"int pom(int a, int b){int k=1;while(b){if(b&1)k=k*a%m;a=a*a%m;b>>=1;}return k;}"
+		]
+	},
+
+	"Segment Tree":{
+		"prefix": "segt",
+		"body": [
+			"template<typename T>",
+			"class segtree{",
+			"public:",
+			"    v<T> t;",
+			"    int n;",
+			"    T idn;",
+			"    segtree(v<T> &a,T idn):idn(idn){",
+			"        n=a.size();",
+			"        t.assign(4*n,idn);",
+			"        for(int i=0; i<n; i++) set(i,a[i]);",
+			"    }",
+			"    T merge(T a,T b){",
+			"        return $0",
+			"    }",
+			"    int query(int l,int r){",
+			"        function<T(int,int,int)> f=[&](int tid,int tl,int tr)->T {",
+			"            if(l>tr || r<tl) return idn;",
+			"            if(l<=tl && r>=tr) return t[tid];",
+			"            int tm=(tl+tr)/2;",
+			"            return merge(f(2*tid+1,tl,tm),f(2*tid+2,tm+1,tr));",
+			"        };",
+			"        return f(0,0,n-1);",
+			"    }",
+			"    void set(int id,T val){",
+			"        function<void(int,int,int)> f=[&](int tid,int tl,int tr){",
+			"            if(tl==tr){",
+			"                t[tid]=val;",
+			"                return;",
+			"            }",
+			"            int tm=(tl+tr)/2;",
+			"            if(id<=tm) f(2*tid+1,tl,tm);",
+			"            else f(2*tid+2,tm+1,tr);",
+			"            t[tid]=merge(t[2*tid+1],t[2*tid+2]);",
+			"        };",
+			"        f(0,0,n-1);",
+			"    }",
+			"};"
+		]
+	},
+
+	"4 dir array":{
+		"prefix": "4d",
+		"body": [
+			"const int dx[4]={1,0,-1,0};",
+			"const int dy[4]={0,-1,0,1};"
+		]
+	},
+
+	"8 dir array":{
+		"prefix": "8d",
+		"body": [
+			"const int dx[8]={1,1,0,-1,-1,-1,0,1};",
+			"const int dy[8]={0,-1,-1,-1,0,1,1,1};"
+		]
+	},
+
+	"isk":{
+		"prefix": "isk",
+		"body": [
+			"bool isk($1 &a, int i, int j){",
+			"    return i>=0 && i<a.size() && j>=0 && j<a[0].size()$2;",
+			"}$0"
+		]
+	},
+
+	"dfs":{
+		"prefix": "dfs",
+		"body": [
+			"void dfs($1 &a, int x, int y){",
+			"    isv[x][y]=1;",
+			"    for(int d=0; d<$2; d++){",
+			"        int nx=x+dx[d];",
+			"        int ny=y+dy[d];",
+			"        if(isk(a,nx,ny) && !isv[nx][ny] && a[nx][ny]==$3) dfs(a,nx,ny);",
+			"    }",
+		    "}$0"
+		]
+	},
+
+	"new xy":{
+		"prefix": "nx",
+		"body": [
+			"int nx=x+dx[d];",
+			"int ny=y+dy[d];"
 		]
 	}
 }
