@@ -15,8 +15,8 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 void solve(){
     int n;cin>>n;
     string s="aeiou";
-    
-    
+    for(int i=0,k=n/5,r=n%5; i<5; i++) cout<<string(k+(i<r),s[i]);
+    cout<<endl;
 }
 int32_t main(){
     IOS int t=1;

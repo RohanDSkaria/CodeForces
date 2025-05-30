@@ -84,7 +84,7 @@
 		"prefix": "bix",
 		"body": [
 			"int po(int a, int b){int k=1;while(b){if(b&1)k*=a;a*=a;b>>=1;}return k;}",
-			"int pom(int a, int b){int k=1;while(b){if(b&1)k=k*a%m;a=a*a%m;b>>=1;}return k;}"
+			"int pom(int a, int b){int k=1;while(b){if(b&1)k=k*a%mod;a=a*a%mod;b>>=1;}return k;}"
 		]
 	},
 	
@@ -207,11 +207,29 @@
 			"int32_t main(){",
 			"    IOS int t=1;",
 			"    cin>>t;$1",
-			"    while(t--) cout<<(solve()?\"Yes\":\"No\")<<endl;",
+			"    while(t--) cout<<(solve()?\"Yes\\n\":\"No\\n\");",
 			"}",
 			"/*",
 			"",
 			"*/"
+		]
+	},
+
+	"seive":{
+		"prefix": "seev",
+		"body": [
+			"vi primes;",
+			"const int M=1e6+1;",
+			"bitset<M> isPrime;",
+			"void seev(){",
+			"    isPrime.set();",
+			"    for(int i=2; i<M; i++){",
+			"        if(isPrime[i]){",
+			"            primes.pb(i);",
+			"            for(int j=i*i; j<M; j+=i) isPrime[j]=0;",
+			"        }",
+			"    }",
+			"}"
 		]
 	}
 }

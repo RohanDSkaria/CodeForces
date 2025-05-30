@@ -15,28 +15,13 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 void solve(){
     int n;cin>>n;
     v<vi> a(n,vi(n));cin>>a;
-    vi b;
-    for(int i=n-1; i>=0; i--){
-        int j=0,k=i,mi=a[k][j];
-        while(k<n){
-            mi=min(mi,a[k][j]);
-            k++;
-            j++;
+    vi b(2*n-1);
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            b[i-j+n-1]=min(a[i][j],b[i-j+n-1]);
         }
-        b.pb(mi);
     }
-    for(int j=1; j<n; j++){
-        int i=0,k=j,mi=a[i][k];
-        while(k<n){
-            mi=min(mi,a[i][k]);
-            k++;
-            i++;
-        }
-        b.pb(mi);
-    }
-    int ans=0;
-    for(int i:b) if(i<0) ans+=abs(i);
-    cout<<ans<<endl;
+    cout<<-accumulate(all(b),0ll)<<endl;
 }
 int32_t main(){
     IOS int t=1;

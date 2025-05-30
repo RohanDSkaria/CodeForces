@@ -20,13 +20,39 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 void solve(){
     int n;cin>>n;
     vi a(n);cin>>a;
-    int k=1;
-    for(int i:a) if(abs(i)!=1) k=i;
-    if(k==1){
-
-        
-        return;
+    int z=n;
+    for(int i=0; i<n; i++) if(abs(a[i])!=1) z=i;
+    auto fn=[&](int s, int e)-> pair<int,int>
+    {
+        int mx=0,mn=2e9;
+        int cmx=0,cmn=0;
+        for(int i=s; i<e; i++){
+            cmx=max(a[i],cmx+a[i]);
+            cmn=min(a[i],cmn+a[i]);
+            mx=max(mx,cmx);
+            mn=min(mn,cmn);
+        }
+        return {mn,mx};
+    };
+    set<int> s={0};
+    pair<int,int> leftsub=fn(0,z),rightsub=fn(z+1,n);
+    pair<int,int> left={0,0},right={0,0};
+    for(int i=z-1,sum=0; i>=0; i--){
+        sum+=a[i];
+        auto &[x,y]=left;
+        x=min(x,sum);
+        y=max(y,sum);
     }
+    for(int i=z+1,sum=0; i<n; i++){
+        sum+=a[i];
+        auto &[x,y]=right;
+        x=min(x,sum);
+        y=max(y,sum);
+    }
+    for(int i=leftsub.first; i<=leftsub.second; i++) s.insert(i);
+    for(int i=rightsub.first; i<=rightsub.second; i++) s.insert(i);
+    for(int i=left.first+(z<n?a[z]:0)+right.first; i<=right.second+left.second+(z<n?a[z]:0); i++) s.insert(i);
+    cout<<s.size()<<endl<<s<<endl;
 }
 int32_t main(){
     IOS int t=1;

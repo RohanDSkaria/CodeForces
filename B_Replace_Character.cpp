@@ -21,31 +21,14 @@ void solve(){
     int n;cin>>n;
     string s;cin>>s;
     map<char,int> m;
-    for(auto i:s) m[i]++;
-    int mf=100,mxf=-1;
-    for(auto i:m){
-        mf=min(mf,i.second);
-        mxf=max(mxf,i.second);
+    for(char i:s) m[i]++;
+    v<pair<int,char>> a;
+    for(auto &[x,y]:m) a.pb({y,x});
+    sort(all(a));
+    for(char &c:s) if(c==a[0].second){
+        c=a.back().second;
+        break;
     }
-    int ins=-1,inb=-1,i;
-    for(i=0; i<n; i++){
-        if(m[s[i]]==mf){
-            ins=i;
-            break;
-        }
-    }
-    for(int j=0; j<n; j++){
-        if(s[i]==s[j]) continue;
-        if(m[s[j]]==mxf){
-            inb=j;
-            break;
-        }
-    }
-    if(ins==-1 || inb==-1){
-        cout<<s<<endl;
-        return;
-    }
-    s[ins]=s[inb];
     cout<<s<<endl;
 }
 int32_t main(){

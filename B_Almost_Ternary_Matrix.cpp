@@ -19,15 +19,10 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 
 void solve(){
     int n,m;cin>>n>>m;
-    v<vi> a(2,vi(m));
-    for(int i=0,c=1; i<m; i++){
-        a[0][i]=(c?1:0);
-        a[1][i]=!a[0][i];
-        if(!(i&1)) c^=1;
-    }
-    for(int i=0,c=0; i<n; i++){
-        cout<<a[c]<<endl;
-        if(!(i&1)) c^=1;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+            cout<<((i^j^(i>>1)^(j>>1))&1)<<" \n"[j==m-1];
+        }
     }
 }
 int32_t main(){
