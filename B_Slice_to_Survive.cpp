@@ -20,18 +20,10 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 
 void solve(){
     int n,m,a,b;cin>>n>>m>>a>>b;
-    int x=max(a,n-a),y=max(b,m-b);
-    if((x-1)*m>(y-1)*n){
-        if(a>n-a) a=(n-a+2)/2;
-        else a=(a+1)/2;
-        b=(m+1)/2;
-    }
-    else{
-        if(b>m-b) b=(m-b+2)/2;
-        else b=(b+1)/2;
-        a=(n+1)/2;
-    }
-    cout<<((a+1)/2+(b+1)/2)+1<<endl;
+    auto fn=[](int n){
+        return __lg(2*n-1);
+    };
+    cout<<1+min(fn(n)+fn(min(b,m-b+1)),fn(m)+fn(min(a,n-a+1)))<<endl;
 }
 int32_t main(){
     IOS int t=1;
@@ -39,7 +31,5 @@ int32_t main(){
     while(t--) solve();
 }
 /*
-x x x 
-x x x
-x x x
+
 */

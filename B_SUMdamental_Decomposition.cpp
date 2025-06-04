@@ -20,30 +20,16 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 
 void solve(){
     int n,x;cin>>n>>x;
-    if(n==1){
-        cout<<-1<<endl;
+    if(n==1 && !x){
+        cout<<"-1\n";
         return;
     }
-    // cout<<bitset<32>(x)<<endl;
-    int k=x,cnt=0;
-    while(k) k&=(k-1),cnt++;
-    k=x;
-    if(cnt<=n){
-        n-=cnt;
-        x+=n;
-    }
-    else{
-        cout<<x<<endl;
-        return;
-    }
-    if(n&1){
-        if(n==1){
-            cout<<-1<<endl;
-            return;
-        }
-        x+=3;
-    }
-    cout<<x<<endl;
+    int c=0,k=x;
+    while(k) k&=(k-1),c++;
+    if(x==1 && !(n&1)) x=5,c++;
+    if(!x and n&1) cout<<5+n-2;
+    else cout<<x+max(0ll,n-c+((n-c)&1));
+    cout<<endl;
 }
 int32_t main(){
     IOS int t=1;

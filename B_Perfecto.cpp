@@ -18,17 +18,19 @@ template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<endl;for(au
 template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<endl;for(auto&[k,v]:m)os<<k<<" -> "<<v<<endl;return os;}
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<endl;if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
-set<int> st={1,8,49,288,1681,9800,57121,332928};
 void solve(){
     int n;cin>>n;
-    if(st.count(n)){
+    auto fn=[](int n){
+        int k=sqrt(n);
+        return k*k==n;
+    };
+    if(fn(n*(n+1)/2)){
         cout<<-1<<endl;
         return;
     }
     vi a(n);iota(all(a),1);
-    for(auto i:st){
-        if(i>n) break;
-        swap(a[i],a[i-1]);
+    for(int i=1; i<n; i++){
+        if(fn(i*(i+1)/2)) swap(a[i],a[i-1]),i++;
     }
     cout<<a<<endl;
 }

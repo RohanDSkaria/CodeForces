@@ -18,19 +18,15 @@ template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<endl;for(au
 template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<endl;for(auto&[k,v]:m)os<<k<<" -> "<<v<<endl;return os;}
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<endl;if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
-bool fn(int a, int b, int c){
-    return a+b>c && a+c>b && b+c>a;
-}
 void solve(){
-    int n;cin>>n;
-    for(int i=1; i<min(n,1000000ll);i++){
-        int k=n^(n-i);
-        if(fn(k,n,n-i)){
-            cout<<n-i<<endl;
-            return;
-        }
+    int x;cin>>x;
+    int y=0,ya=0;
+    for(int i=0; x>>i; i++){
+        if((x>>i)&1 and ya++) continue;
+        y^=(1<<i);
     }
-    cout<<-1<<endl;
+    int k=x^y;
+    cout<<(x+y>k && y+k>x && k+x>y?y:-1)<<endl;
 }
 int32_t main(){
     IOS int t=1;

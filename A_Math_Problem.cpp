@@ -14,13 +14,13 @@ template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os
 
 void solve(){
     int n;cin>>n;
-    int l=-1,r=1e9;
-    for(int i=0; i<n; i++){
-        int a,b;cin>>a>>b;
-        l=max(l,a);
-        r=min(r,b);
+    int l=1e9,r=0;
+    while(n--){
+        int x,y;cin>>x>>y;
+        l=min(l,y);
+        r=max(r,x);
     }
-    cout<<max(0ll,l-r)<<endl;
+    cout<<max(0ll,r-l)<<endl;
 }
 int32_t main(){
     IOS int t=1;

@@ -25,19 +25,26 @@ void solve(){
         cout<<"1\n";
         return;
     }
-    sort(all(a));
-    int fmx=a[n-1][0],smx=a[n-2][0];
-    int fmnx=a[0][0],smnx=a[1][0];
-    sort(all(a),[](const vi &a, const vi&b){
-        return a[1]<b[1];
-    });
-    int fmy=a[n-1][1],smy=a[n-2][1];
-    int fmny=a[0][1],smny=a[1][1];
-    int ans=(fmx-fmnx+1)*(fmy-fmny+1);
-    if(fmx!=smx) ans=min(ans,(smx-fmnx+1)*(fmy-fmny+1));
-    if(fmnx!=smnx) ans=min(ans,(fmx-smnx+1)*(fmy-fmny+1));
-    if(fmy!=smy) ans=min(ans,(fmx-smnx+1)*(smy-fmny+1));
-    if(fmny!=smny) ans=min(ans,(fmx-smnx+1)*(smy-smny+1));
+    multiset<int> x,y;
+    for(int i=0; i<n; i++){
+        x.insert(a[i][0]);
+        y.insert(a[i][1]);
+    }
+    int ans=1ll<<62;
+    int mnx=*x.begin(),mx=*x.rbegin();
+    int mny=*y.begin(),my=*y.rbegin();
+    for(vi &i:a){
+        if(i[0]!=mnx && i[0]!=mx && i[1]!=mny && i[1]!=my) continue;
+        x.erase(x.find(i[0]));
+        y.erase(y.find(i[1]));
+        mnx=*x.begin(),mx=*x.rbegin();
+        mny=*y.begin(),my=*y.rbegin();
+        int t=(mx-mnx+1)*(my-mny+1);
+        if(t==n-1) t+=min(mx-mnx,my-mny)+1;
+        ans=min(ans,t);
+        x.insert(i[0]);
+        y.insert(i[1]);
+    }
     cout<<ans<<endl;
 }
 int32_t main(){

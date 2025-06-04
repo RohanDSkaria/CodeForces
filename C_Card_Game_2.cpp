@@ -20,9 +20,12 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 
 bool solve(){
     int n;cin>>n;
-    v<char> a(n);cin>>a;
-    if(a[0]==a[n-1] || n==2) return a[0]=='A';
-    
+    string s;cin>>s;
+    int c=count(all(s),'B');
+    if(s[0]=='A' && s[n-1]=='A') return 1;
+    if(s[0]=='B' && s[n-1]=='A') return s[n-2]=='A';
+    if(s[0]=='A' && s[n-1]=='B') return c==1;
+    return 0;
 }
 int32_t main(){
     IOS int t=1;

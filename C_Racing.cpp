@@ -22,7 +22,23 @@ void solve(){
     int n;cin>>n;
     vi a(n);cin>>a;
     v<vi> b(n,vi(2));cin>>b;
-    
+    int l=0,r=0;
+    for(auto &i:b){
+        r=min(r+1,i[1]);
+        l=max(l,i[0]);
+        if(l>r){
+            cout<<"-1\n";
+            return;
+        }
+    }
+    for(int i=n-1; i>=0; i--){
+        if(a[i]){
+            r--;
+            if(a[i]==-1) a[i]=1;
+        }
+    }
+    if(r) cout<<"-1\n";
+    else cout<<a<<endl;
 }
 int32_t main(){
     IOS int t=1;

@@ -14,46 +14,29 @@ template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){ret
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
 template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
-template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<endl;for(auto&i:v)os<<i<<endl;return os;}
+template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){for(auto&i:v)os<<i<<endl;return os;}
 template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<endl;for(auto&[k,v]:m)os<<k<<" -> "<<v<<endl;return os;}
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<endl;if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
-void solve(){
+bool solve(){
     int n,m;cin>>n>>m;
     vi a(n),b(m);cin>>a>>b;
     sort(all(b));
-    int k=0;
     a[0]=min(a[0],b[0]-a[0]);
     for(int i=1; i<n; i++){
-        if(b[k]-a[i]>=a[i-1]) a[i]=min(a[i],b[k]-a[i]);
-        else if(k>=m){
-            cout<<"NO"<<endl;
-            return;
-        }
-        else{
-            k++;
-            if(k==m){
-                cout<<"NO"<<endl;
-                return;
-            }
-            if(b[k]-a[i]>=a[i-1]) a[i]=min(a[i],b[k]-a[i]);
-            else{
-                cout<<"NO"<<endl;
-                return;
-            }
-        }
+        auto it=lower_bound(all(b),a[i]+a[i-1]);
+        if(it==b.end()) --it;
+        int mn=min(a[i],*it-a[i]),mx=max(a[i],*it-a[i]);
+        if(mn>=a[i-1]) a[i]=mn;
+        else if(mx>=a[i-1]) a[i]=mx;
+        else return 0;
     }
-    for(int i=1; i<n; i++){
-        if(a[i]>=a[i-1]) continue;
-        cout<<"NO"<<endl;
-        return;
-    }
-    cout<<"YES"<<endl;
+    return 1;
 }
 int32_t main(){
     IOS int t=1;
     cin>>t;
-    while(t--) solve();
+    while(t--) cout<<(solve()?"Yes\n":"No\n");
 }
 /*
 
