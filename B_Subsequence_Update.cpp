@@ -21,25 +21,21 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 void solve(){
     int n,l,r;cin>>n>>l>>r;
     vi a(n);cin>>a;
-    priority_queue<int> q;
-    for(int i=0; i<r; i++){
-        q.push(a[i]);
-        if(q.size()>r-l+1) q.pop();
+    multiset<int> ll(a.begin(),a.begin()+r);
+    multiset<int> rr(a.begin()+l-1,a.end());
+    int b=0,c=0,k=r-l+1;
+    for(int i:ll){
+        if(!k) break;
+        b+=i;
+        k--;
     }
-    int ans=0,sum=0;
-    while(q.size()){
-        ans+=q.top();
-        q.pop();
+    k=r-l+1;
+    for(int i:rr){
+        if(!k) break;
+        c+=i;
+        k--;
     }
-    for(int i=l-1; i<n; i++){
-        q.push(a[i]);
-        if(q.size()>r-l+1) q.pop();
-    }
-    while(q.size()){
-        sum+=q.top();
-        q.pop();
-    }
-    cout<<min(ans,sum)<<endl;
+    cout<<min(b,c)<<endl;
 }
 int32_t main(){
     IOS int t=1;

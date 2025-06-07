@@ -6,34 +6,40 @@ using namespace std;
 #define v vector
 #define vi v<int>
 #define pb push_back
-#define all(a) a.begin(),a.e()
+#define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
 #define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);
-template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<p.first<<" "<<p.second;}
+template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<"{"<<p.first<<","<<p.second<<"}";}
 template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
 template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
-template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<endl;for(auto&i:v)os<<i<<endl;return os;}
+template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){for(auto&i:v)os<<i<<endl;return os;}
 template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<endl;for(auto&[k,v]:m)os<<k<<" -> "<<v<<endl;return os;}
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<endl;if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
     int n;cin>>n;
     vi a(n);cin>>a;
-    map<int,int> m;
-    for(int i:a) m[i]++;
-    for(int &i:a) i=m[i]==1;
-    vi ans={-1,-1};
-    for(int i=0; i<n; i++){
-        if(!a[i]) continue;
-        int j=i;
-        while(j<n && a[j]==a[i]) j++;
-        if(j-i>=ans[1]-ans[0]+1) ans={i+1,j};
-        i=j-1;
+    sort(all(a));
+    int k=-1,v;
+    for(int i=1; i<n; i++){
+        if(a[i]==a[i-1]) k=i,v=a[i];
     }
-    if(ans[0]==-1) cout<<"0\n";
-    else cout<<ans<<endl;
+    if(k==-1){
+        cout<<"-1\n";
+        return;
+    }
+    a.erase(find(all(a),v));
+    a.erase(find(all(a),v));
+    n=a.size();
+    for(int i=1; i<n; i++){
+        if(a[i]-a[i-1]<2*v){
+            cout<<v<<" "<<v<<" "<<a[i]<<" "<<a[i-1]<<endl;
+            return;
+        }
+    }
+    cout<<"-1\n";
 }
 int32_t main(){
     IOS int t=1;
