@@ -19,31 +19,18 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 
 void solve(){
     int n,s;cin>>n>>s;
-    if((!s && n>1) || s>9*n){
-        cout<<"-1 -1\n";
-        return;
-    }
-    string a,b;
-    int ss=s;
+    int ans=0;
     for(int i=0; i<n; i++){
-        for(int d=0; d<10; d++){
-            if((i+d==0 && n>1) || (n-i-1)*9<s-d) continue;
-            a+=d+'0';
-            s-=d;
-            break;
-        }
-        for(int d=9; d>=0; d--){
-            if(ss-d<0) continue;
-            b+=d+'0';
-            ss-=d;
-            break;
-        }
+        int dx,dy,x,y;cin>>dx>>dy>>x>>y;
+        int a=dx==1?x:s-x;
+        int b=dy==1?y:s-y;
+        ans+=(a*__gcd(b,s))==(b*__gcd(a,s));
     }
-    cout<<a<<' '<<b<<'\n';
+    cout<<ans<<'\n';
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--) solve();
 }
 /*

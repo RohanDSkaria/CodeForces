@@ -18,28 +18,31 @@ template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n,s;cin>>n>>s;
-    if((!s && n>1) || s>9*n){
-        cout<<"-1 -1\n";
-        return;
-    }
-    string a,b;
-    int ss=s;
-    for(int i=0; i<n; i++){
-        for(int d=0; d<10; d++){
-            if((i+d==0 && n>1) || (n-i-1)*9<s-d) continue;
-            a+=d+'0';
-            s-=d;
-            break;
+    int n,q;cin>>n>>q;
+    vi a(n);cin>>a;
+    int sum=accumulate(all(a),0ll),ya=0,p=0;
+    set<int> s;
+    while(q--){
+        int t,x;cin>>t>>x;
+        if(t==1){
+            int i;cin>>i;
+            x--;
+            if(ya){
+                if(!s.count(x)) a[x]=p;
+                s.insert(x);
+            }
+            sum-=a[x];
+            a[x]=i;
+            sum+=i;
         }
-        for(int d=9; d>=0; d--){
-            if(ss-d<0) continue;
-            b+=d+'0';
-            ss-=d;
-            break;
+        else{
+            ya=1;
+            sum=n*x;
+            p=x;
+            s.clear();
         }
+        cout<<sum<<'\n';
     }
-    cout<<a<<' '<<b<<'\n';
 }
 int32_t main(){
     IOS int t=1;

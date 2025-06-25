@@ -18,32 +18,35 @@ template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n,s;cin>>n>>s;
-    if((!s && n>1) || s>9*n){
-        cout<<"-1 -1\n";
-        return;
-    }
-    string a,b;
-    int ss=s;
-    for(int i=0; i<n; i++){
-        for(int d=0; d<10; d++){
-            if((i+d==0 && n>1) || (n-i-1)*9<s-d) continue;
-            a+=d+'0';
-            s-=d;
-            break;
+    int n;cin>>n;
+    vi a(n);cin>>a;
+    int ans=0;
+    auto fn=[&](int s, int t){
+        int e=n-1;
+        while(s<=e){
+            int m=s+(e-s)/2;
+            if(a[m]>=t) e=m-1;
+            else s=m+1; 
         }
-        for(int d=9; d>=0; d--){
-            if(ss-d<0) continue;
-            b+=d+'0';
-            ss-=d;
-            break;
+        return e;
+    };
+    for(int i=0; i<n-2; i++){
+        for(int j=i+1; j<n-1; j++){
+            int k=fn(j+1,a[i]+a[j]);
+            if(k<=j || a[k]==a[i]+a[j]) continue;
+            if(k==n-1){
+                if(a[i]+a[j]>a[k]) ans+=k-j;
+            }
+            else{
+                if(a[i]+a[j]+a[k]>a[n-1]) ans+=k-j;
+            }
         }
     }
-    cout<<a<<' '<<b<<'\n';
+    cout<<ans<<'\n';
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--) solve();
 }
 /*

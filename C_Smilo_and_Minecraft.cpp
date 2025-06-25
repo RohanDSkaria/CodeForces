@@ -18,32 +18,61 @@ template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n,s;cin>>n>>s;
-    if((!s && n>1) || s>9*n){
-        cout<<"-1 -1\n";
-        return;
-    }
-    string a,b;
-    int ss=s;
+    string s;
+    s+=char(90)+char(100);
+    int n,m,k;cin>>n>>m>>k;
+    v<string> a(n);cin>>a;
+    priority_queue<pair<int,pair<int,int>>> q;
+    auto cnt=[&](int x, int y){
+        int c=0;
+        for(int i=x-k; i<=x+k; i++){
+            for(int j=y-k; j<=y+k; j++){
+                if(i<0 || i>=n || j<0 || j>=m) continue;
+                if(i!=x-k && i!=x+k && j!=y-k && j!=y+k) continue;
+                c+=a[i][j]=='g';
+            }
+        }
+        return c;
+    };
+    auto fn=[&](int x, int y){
+        int c=cnt(x,y);
+        for(int i=x-k+1; i<x+k; i++){
+            for(int j=y-k+1; j<y+k; j++){
+                if(i<0 || i>=n || j<0 || j>=m) continue;
+                c-=a[i][j]=='g';
+            }
+        }
+        return c;
+    };
+    auto bomb=[&](int x, int y){
+        for(int i=x-k; i<=x+k; i++){
+            for(int j=y-k; j<=y+k; j++){
+                if(i<0 || i>=n || j<0 || j>=m) continue;
+                a[i][j]='.';
+            }
+        }
+    };
     for(int i=0; i<n; i++){
-        for(int d=0; d<10; d++){
-            if((i+d==0 && n>1) || (n-i-1)*9<s-d) continue;
-            a+=d+'0';
-            s-=d;
-            break;
-        }
-        for(int d=9; d>=0; d--){
-            if(ss-d<0) continue;
-            b+=d+'0';
-            ss-=d;
-            break;
+        for(int j=0; j<m; j++){
+            if(a[i][j]!='.') continue;
+            q.push({fn(i,j),{i,j}});
+
         }
     }
-    cout<<a<<' '<<b<<'\n';
+    int ans=0;
+    while(!q.empty()){
+        auto [_,t]=q.top();
+        auto [x,y]=t;
+        q.pop();
+        ans+=cnt(x,y);
+        // deb(ans)
+        bomb(x,y);
+    }
+    cout<<ans<<'\n';
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--) solve();
 }
 /*

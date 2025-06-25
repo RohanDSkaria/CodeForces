@@ -1,31 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
-#define endl '\n'
 #define int long long
-#define pb(a) push_back(a)
 #define v vector
 #define vi v<int>
-#define bl cout<<endl;
+#define pb push_back
 #define all(a) a.begin(),a.end()
-#define deb(x) cout<<#x<<" = "<<x<<endl;
-template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
-template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
-int ncr(int n, int r){
-    if(r>n) return 0;
-    int ans=1;
-    for(int i=0; i<r; i++){
-        ans*=n-i;
-        ans/=i+1;
-    }
-    return ans;
-}
+#define rall(a) a.rbegin(),a.rend()
+#define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);
+template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<"{"<<p.first<<","<<p.second<<"}";}
+template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}
+template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
+template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){for(auto&i:v)os<<i<<'\n';return os;}
+template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
+template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
+
 void solve(){
-    int a,b,t;cin>>a>>b>>t;
-    int tot=ncr(a+b,t);
-    int k=ncr(a,t)+ncr(b,t);
-    for(int i=1; i<4; i++) k+=ncr(a,i)*ncr(b,t-i);
-    cout<<tot-k;
+    int n,m,k;cin>>n>>m>>k;
+    auto ncr=[](int n, int r){
+        if(r<0 || r>n) return 0ll;
+        r=min(r,n-r);
+        int ans=1;
+        for(int i=0; i<r; i++) ans*=n-i,ans/=i+1;
+        return ans;
+    };
+    int ans=ncr(n+m,k)-ncr(n,k);
+    for(int i=0; i<4; i++) ans-=ncr(n,i)*ncr(m,k-i);
+    cout<<ans<<'\n';
 }
 int32_t main(){
     IOS int t=1;

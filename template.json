@@ -228,5 +228,18 @@
 			"    }",
 			"}"
 		]
+	},
+
+	"ncr":{
+		"prefix": "ncr",
+		"body": [
+			"auto ncr=[](int n, int r){",
+			"    if(r<0 || r>n) return 0ll;",
+			"    r=min(r,n-r);",
+			"    int ans=1;",
+			"    for(int i=0; i<r; i++) ans*=n-i,ans/=i+1;",
+			"    return ans;",
+			"};"
+		]
 	}
 }

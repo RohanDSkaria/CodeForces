@@ -1,58 +1,38 @@
-// https://codeforces.com/contest/79/problem/B
 #include <bits/stdc++.h>
 using namespace std;
-#define IOS ios::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
-#define endl '\n'
-// #define int long long
-#define pb(a) push_back(a)
+#define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define int long long
 #define v vector
 #define vi v<int>
-#define vb v<bool>
-#define vc v<char>
-#define vvi v<vi>
-#define bl cout<<endl;
+#define pb push_back
 #define all(a) a.begin(),a.end()
 #define rall(a) a.rbegin(),a.rend()
-#define deb(x) cout << #x << " = " << x << endl;
-#define pii pair<int,int>
-#define vpii v<pii>
-#define fi first
-#define se second
-#define mii map<int,int>
-#define mci map<char,int>
-#define si set<int>
-#define sc set<char>
-int nCr(int n, int r){if(r>n) return 0;if(n==r) return 1;int ans=1;for(int i=0; i<r; i++){ans*=(n-i);ans/=(i+1);}return ans;}
-vb sieve(int n){vb A(n+1,1);for(int i=2; i*i<=n; i++){if(A[i]) for(int j=i*i; j<=n; j+=i) A[j]=0;}return A;}
-// map<ll,ll> dp;
-// ll f(ll n){if(dp.count(n)) return dp[n];ll k=n/2;if(n&1) return dp[n] = (f(k)*f(k+1) + f(k-1)*f(k));else return dp[n] = (f(k)*f(k) + f(k-1)*f(k-1));}
-int gcd(int a, int b){return b?gcd(b,a%b):a;}
-int lcm(int a, int b){return a/gcd(a,b)*b;}
-template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
-template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
+#define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);
+template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<"{"<<p.first<<","<<p.second<<"}";}
+template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}
+template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
+template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){for(auto&i:v)os<<i<<'\n';return os;}
+template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
+template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
-int cnt(vpii& a, pii& b, int& m, int& k){
-    int g = (b.fi-1)*m+b.se,h=0;
-    for(int i=0; i<k; i++){
-        if(b.fi==a[i].fi && b.se==a[i].se) return -1;
-        if(b.fi>a[i].fi || (b.fi==a[i].fi && b.se>a[i].se)) h++;
-    }
-    return g-h;
-}
 void solve(){
     int n,m,k,t;cin>>n>>m>>k>>t;
+    set<pair<int,int>> st;
     v<string> s={"Grapes","Carrots","Kiwis"};
-    vpii a(k);
-    for(int i=0; i<k; i++) cin>>a[i].fi>>a[i].se;
+    while(k--){
+        int a,b;cin>>a>>b;
+        st.insert({a,b});
+    }
     while(t--){
-        pii b; cin>>b.fi>>b.se;
-        int c = cnt(a,b,m,k);
-        cout<<((c==-1)?("Waste"):s[c%3])<<endl;
+        int a,b;cin>>a>>b;
+        if(st.count({a,b})) cout<<"Waste\n";
+        else cout<<s[(m*(a-1)+b-distance(st.begin(), st.lower_bound({a,b})))%3]<<'\n';
     }
 }
 int32_t main(){
-    IOS
-    int t=1;
+    IOS int t=1;
     // cin>>t;
     while(t--) solve();
 }

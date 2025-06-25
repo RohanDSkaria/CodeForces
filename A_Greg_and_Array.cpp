@@ -1,40 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
-#define endl '\n'
 #define int long long
-#define pb(a) push_back(a)
 #define v vector
 #define vi v<int>
-#define bl cout<<endl;
+#define pb push_back
 #define all(a) a.begin(),a.end()
-#define deb(x) cout<<#x<<" = "<<x<<endl;
-template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
-template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
+#define rall(a) a.rbegin(),a.rend()
+#define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);
+template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<"{"<<p.first<<","<<p.second<<"}";}
+template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}
+template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
+template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){for(auto&i:v)os<<i<<'\n';return os;}
+template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
+template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
     int n,m,k;cin>>n>>m>>k;
-    vi a(n),b(n),d(m);cin>>a;
-    v<vi> c(m,vi(3));cin>>c;
+    vi a(n);cin>>a;
+    v<vi> b(m,vi(3));cin>>b;
+    vi c(m),ans(n);
     for(int i=0; i<k; i++){
-        int g,h;cin>>g>>h;
-        d[g-1]+=1;
-        if(h!=m) d[h]-=1;
+        int x,y;cin>>x>>y;
+        c[x-1]++;
+        if(y<m) c[y]--;
     }
-    b[c[0][0]-1]=d[0]*c[0][2];
-    if(c[0][1]!=n) b[c[0][1]]=-d[0]*c[0][2];
-    for(int i=1; i<m; i++){
-        d[i]+=d[i-1];
-        int g=d[i]*c[i][2];
-        b[c[i][0]-1]+=g;
-        if(c[i][1]!=n) b[c[i][1]]-=g;
+    for(int i=1; i<m; i++) c[i]+=c[i-1];
+    for(int i=0; i<m; i++){
+        int x=b[i][0]-1,y=b[i][1];
+        int k=c[i]*b[i][2];
+        ans[x]+=k;
+        if(y<n) ans[y]-=k;
     }
-    a[0]+=b[0];
-    for(int i=1; i<n; i++){
-        b[i]+=b[i-1];
-        a[i]+=b[i];
-    }
-    cout<<a<<endl;
+    for(int i=1; i<n; i++) ans[i]+=ans[i-1];
+    for(int i=0; i<n; i++) a[i]+=ans[i];
+    cout<<a<<'\n';
 }
 int32_t main(){
     IOS int t=1;

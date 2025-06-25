@@ -18,32 +18,17 @@ template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n,s;cin>>n>>s;
-    if((!s && n>1) || s>9*n){
-        cout<<"-1 -1\n";
-        return;
-    }
-    string a,b;
-    int ss=s;
-    for(int i=0; i<n; i++){
-        for(int d=0; d<10; d++){
-            if((i+d==0 && n>1) || (n-i-1)*9<s-d) continue;
-            a+=d+'0';
-            s-=d;
-            break;
-        }
-        for(int d=9; d>=0; d--){
-            if(ss-d<0) continue;
-            b+=d+'0';
-            ss-=d;
-            break;
-        }
-    }
-    cout<<a<<' '<<b<<'\n';
+    int n,k;cin>>n>>k;
+    vi a(n);cin>>a;
+    sort(all(a));
+    for(int i=1; i<n; i++) a[i]+=a[i-1];
+    int ans=0;
+    for(int i=0; i<k; i++) ans=max(ans,a[n-1-i]-a[2*(k-i)-1]);
+    cout<<max(ans,a[n-1-k])<<'\n';
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--) solve();
 }
 /*

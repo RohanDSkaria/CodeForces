@@ -21,12 +21,7 @@ template<typename T,typename... Args>void _print(string s,T v,Args... args){size
 bool solve(){
     int n;cin>>n;
     string s,r;cin>>s>>r;
-    int c0=count(all(s),'0'),c1=n-c0;
-    for(int i=0; i<n-1; i++){
-        if(!c0 || !c1) return 0;
-        r[i]=='0'?c1--:c0--;
-    }
-    return 1;
+    return count(all(r),'0')+(r[n-2]=='1')==count(all(s),'1');
 }
 int32_t main(){
     IOS int t=1;

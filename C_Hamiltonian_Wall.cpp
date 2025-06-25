@@ -17,34 +17,49 @@ template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){for(auto&i:v)os
 template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
-void solve(){
-    int n,s;cin>>n>>s;
-    if((!s && n>1) || s>9*n){
-        cout<<"-1 -1\n";
-        return;
+const int dx[4]={1,0,-1,0};
+const int dy[4]={0,-1,0,1};
+bool isk(v<string> &a, int i, int j){
+    return i>=0 && i<a.size() && j>=0 && j<a[0].size() && a[i][j]=='B';
+}
+bool dfs(v<string> &a, int x, int y){
+    a[x][y]='W';
+    for(int d=0; d<4; d++){
+        int nx=x+dx[d];
+        int ny=y+dy[d];
+        if(!isk(a,nx,ny)) continue;
+        if(dfs(a,nx,ny)) return 1;
     }
-    string a,b;
-    int ss=s;
-    for(int i=0; i<n; i++){
-        for(int d=0; d<10; d++){
-            if((i+d==0 && n>1) || (n-i-1)*9<s-d) continue;
-            a+=d+'0';
-            s-=d;
-            break;
+    return 1;
+}
+bool solve(){
+    int m;cin>>m;
+    v<string> a(2),b;cin>>a;
+    b=a;
+    int ya=0,ya2=0;
+    auto fn=[&](v<string> &a, int k, int y, int &ya){
+        for(int j=0,yaa=1; j<m && yaa; j++){
+            for(int i=k; i<2 && i>=0; i+=y){
+                if(a[i][j]=='B'){
+                    if(ya){
+                        ya=0;
+                        yaa=0;
+                        break;
+                    }
+                    dfs(a,i,j);
+                    ya=1;
+                }
+            }
         }
-        for(int d=9; d>=0; d--){
-            if(ss-d<0) continue;
-            b+=d+'0';
-            ss-=d;
-            break;
-        }
-    }
-    cout<<a<<' '<<b<<'\n';
+    };
+    fn(a,0,1,ya);
+    fn(b,1,-1,ya2);
+    return ya||ya2;
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
-    while(t--) solve();
+    cin>>t;
+    while(t--) cout<<(solve()?"Yes\n":"No\n");
 }
 /*
 
