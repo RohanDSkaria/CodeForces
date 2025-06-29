@@ -13,22 +13,32 @@ template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){ret
 template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
 template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
 template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
-template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){for(auto&i:v)os<<i<<'\n';return os;}
+template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<'\n';for(auto&i:v)os<<i<<'\n';return os;}
 template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n,ans=1;cin>>n;
+    int n;cin>>n;
+    v<vi> a(n,vi(2));cin>>a;
+    vi f(2*n+1);
     set<int> s;
-    while(cin>>n){
-        ans+=s.count(n);
-        s.insert(n);
+    for(vi &i:a){
+        if(i[0]==i[1]){
+            s.insert(i[0]);
+            f[i[0]]++;
+        }
     }
-    cout<<ans<<'\n';
+    vi cant(all(s));
+    for(vi &i:a){
+        int k=upper_bound(all(cant),i[1])-lower_bound(all(cant),i[0]);
+        if(i[0]==i[1] && f[i[0]]==1) cout<<(i[1]-i[0]+1>=k);
+        else cout<<(i[1]-i[0]+1>k);
+    }
+    cout<<'\n';
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--) solve();
 }
 /*

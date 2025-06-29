@@ -18,17 +18,46 @@ template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n,ans=1;cin>>n;
-    set<int> s;
-    while(cin>>n){
-        ans+=s.count(n);
-        s.insert(n);
+    int n,q;cin>>n>>q;
+    function<int(int,int,int)> get=[&](int a, int b, int k){
+        if(a<2 && b<2){
+            if(a==0) return b*3+1;
+            return 3-b;
+        }
+        int kk=k/2;
+        if(a<kk){
+            if(b<kk) return get(a,b,k>>1);
+            return 3*kk*kk+get(a,b%kk,k>>1);
+        }
+        else{
+            if(b<kk) return 2*kk*kk+get(a%kk,b,k>>1);
+            return kk*kk+get(a%kk,b%kk,k>>1);
+        }
+    };
+    function<pair<int,int>(int,int)> find=[&](int a, int k){
+        if(a<3) return pair<int,int>{a,a};
+        if(a<5) return pair<int,int>{5-a,2-(a&1)};
+        int kk=k*k/4;
+        if(a<=kk) return find(a,k>>1);
+        int t=a%(kk);
+        pair<int,int> p=find(t?t:kk,k>>1);
+        if(a<=2*kk) return pair<int,int>{k/2+p.first,k/2+p.second};
+        if(a<=3*kk) return pair<int,int>{k/2+p.first,p.second};
+        return pair<int,int>{p.first,k/2+p.second};
+    };
+    while(q--){
+        char c;cin>>c>>c;
+        int a,b;cin>>a;
+        if(c=='>'){
+            cin>>b;
+            cout<<get(a-1,b-1,1ll<<n)<<'\n';
+        }
+        else cout<<find(a,1ll<<n)<<'\n';
     }
-    cout<<ans<<'\n';
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--) solve();
 }
 /*
