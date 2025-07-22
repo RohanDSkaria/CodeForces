@@ -17,14 +17,51 @@ template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<'\n';for(au
 template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
+struct mnMxSt{
+    vi st,mn,mx;
+    void push_back(int n){
+        st.pb(n);
+        int a=mn.size()?mn.back():1e18;
+        int b=mx.size()?mx.back():0;
+        mn.pb(min(n,a));
+        mx.pb(max(n,b));
+    }
+    void pop_back(){
+        st.pop_back();
+        mn.pop_back();
+        mx.pop_back();
+    }
+    int get_mx(){
+        return mx.size()?mx.back():0;
+    }
+    int get_mn(){
+        return mn.size()?mn.back():1e18;
+    }
+};
+int get_mx(mnMxSt &a, mnMxSt &b){
+    return max(a.get_mx(),b.get_mx());
+}
+int get_mn(mnMxSt &a, mnMxSt &b){
+    return min(a.get_mn(),b.get_mn());
+}
+void transfer(mnMxSt &a, mnMxSt &b){
+    while(!a.st.empty()){
+        b.push_back(a.st.back());
+        a.pop_back();
+    }
+}
 void solve(){
-    int n,m;cin>>n>>m;
-    vi a(n),b(m);cin>>a>>b;
-    int ans=0,l=0,r=0;
+    int n,k;cin>>n>>k;
+    vi a(n);cin>>a;
+    int ans=0;
+    mnMxSt l,r;
     for(int i:a){
-        while(l<m && b[l]<i) l++;
-        while(r<m && b[r]<=i) r++;
-        ans+=r-l;
+        r.push_back(i);
+        while(get_mx(l,r)-get_mn(l,r)>k){
+            if(l.st.empty()) transfer(r,l);
+            l.pop_back();
+        }
+        ans+=l.st.size()+r.st.size();
     }
     cout<<ans<<'\n';
 }

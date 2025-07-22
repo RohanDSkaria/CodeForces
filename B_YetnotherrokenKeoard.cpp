@@ -18,19 +18,35 @@ template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<
 template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n,m;cin>>n>>m;
-    vi a(n),b(m);cin>>a>>b;
-    int ans=0,l=0,r=0;
-    for(int i:a){
-        while(l<m && b[l]<i) l++;
-        while(r<m && b[r]<=i) r++;
-        ans+=r-l;
+    string s;cin>>s;
+    int n=s.size();
+    priority_queue<int> up,low;
+    for(int i=0; i<n; i++){
+        if(s[i]=='B'){
+            s[i]='.';
+            if(up.size()){
+                int k=up.top();
+                up.pop();
+                s[k]='.';
+            }
+        }
+        else if(s[i]=='b'){
+            s[i]='.';
+            if(low.size()){
+                int k=low.top();
+                low.pop();
+                s[k]='.';
+            }
+        }
+        else if(s[i]>='a') low.push(i);
+        else up.push(i);
     }
-    cout<<ans<<'\n';
+    for(char c:s) if(c!='.') cout<<c;
+    cout<<'\n';
 }
 int32_t main(){
     IOS int t=1;
-    // cin>>t;
+    cin>>t;
     while(t--) solve();
 }
 /*
