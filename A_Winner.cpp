@@ -1,47 +1,52 @@
-// https://codeforces.com/contest/2/problem/A
 #include <bits/stdc++.h>
 using namespace std;
-#define IOS ios::sync_with_stdio(false);cin.tie(nullptr);cout.tie(nullptr);
-#define endl '\n'
-// #define int long long 
-#define pb(a) push_back(a)
+#define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
+#define int long long
 #define v vector
-#define vi vector<int>
-#define bl cout<<endl;
+#define vi v<int>
+#define pb push_back
 #define all(a) a.begin(),a.end()
-#define deb(x) cout<<#x<<" = "<<x<<endl;
-#define pii pair<int,int>
-#define yed {cout<<"YES"<<endl;return;}
-#define n0 {cout<<"NO"<<endl;return;}
-template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto& x : v)is >> x;return is;}
-template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto& x : v)os << x << ' ';return os;}
+#define rall(a) a.rbegin(),a.rend()
+#define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);
+template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<p.first<<' '<<p.second;}
+template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}
+template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
+template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
+template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<'\n';for(auto&i:v)os<<i<<'\n';return os;}
+template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
+template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
 void solve(){
-    int n;cin>>n;
-    v<pair<string,int>> a(n);
-    for(int i=0; i<n; i++) cin>>a[i].first>>a[i].second;
-    map<string,int> m,m2;
-    int max=-1e6;
-    for(auto i:a){
-        m[i.first]+=i.second;
-        if(m[i.first]>max) max=m[i.first];
-        // cout<<m[i.first]<<" ";
+    int n,x;cin>>n;
+    string s,ans;
+    map<string,v<pair<int,int>>> m;
+    for(int i=0; i<n; i++){
+        cin>>s>>x;
+        v<pair<int,int>> &t=m[s];
+        t.pb({t.size()?t.back().first+x:x,i});
     }
-    for(auto i:m)
-    {
-        cout << i.first << " " << i.second << endl;
+    int mx=0,k=n;
+    for(auto &[_,y]:m) mx=max(mx,y.back().first);
+    for(auto &[xx,y]:m){
+        if(mx==y.back().first){
+            int t=n;
+            for(auto &i:y){
+                if(i.first>=mx){
+                    t=i.second;
+                    break;
+                }
+            }
+            if(t<k){
+                ans=xx;
+                k=t;
+            }
+        }
     }
-    bl
-    deb(max)
-    for(auto i:a){
-        m2[i.first]+=i.second;
-        cout<<m2[i.first]<<" ";
-        if(m2[i.first]==max && m[i.first]==max){cout<<i.first<<endl;return;}
-    }
+    cout<<ans<<'\n';
 }
 int32_t main(){
-    IOS
-    int t=1;
+    IOS int t=1;
     // cin>>t;
     while(t--) solve();
 }
