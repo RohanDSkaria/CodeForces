@@ -1,31 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define IOS ios::sync_with_stdio(0);cin.tie(nullptr);cout.tie(nullptr);
 #define int long long
-#define v vector
-#define vi v<int>
-#define pb push_back
-#define all(a) a.begin(),a.end()
-#define rall(a) a.rbegin(),a.rend()
-#define deb(...) _print(#__VA_ARGS__, __VA_ARGS__);
-template<typename F,typename S>ostream& operator<<(ostream& os,const pair<F,S>& p){return os<<p.first<<' '<<p.second;}
-template<typename F,typename S>istream& operator>>(istream& is,pair<F,S>& p){return is>>p.first>>p.second;}
-template<typename T>istream& operator>>(istream& is, v<T>& v){for(auto&x:v)is>>x;return is;}
-template<typename T>ostream& operator<<(ostream& os, v<T>& v){for(auto&x:v)os<<x<<' ';return os;}
-template<typename T>ostream& operator<<(ostream& os, set<T>& s){for(auto&x:s)os<<x<<' ';return os;}
-template<typename T>ostream& operator<<(ostream& os, v<v<T>>& v){os<<'\n';for(auto&i:v)os<<i<<'\n';return os;}
-template<typename K,typename V>ostream& operator<<(ostream& os,map<K,V>& m){os<<'\n';for(auto&[k,v]:m)os<<k<<" -> "<<v<<'\n';return os;}
-template<typename T,typename... Args>void _print(string s,T v,Args... args){size_t c=s.find(',');cout<<s.substr(0,c)<<" = "<<v<<'\n';if constexpr(sizeof...(args)>0){_print(s.substr(c+1),args...);}}
 
+struct segtree{
+    int k=1;
+    vector<int> tree;
+    segtree(int n){
+        while(k<n) k<<=1;
+        tree.assign(k<<1,0);
+    }
+    void set(int t, int v, int idx, int l, int r){
+        if(l==r){
+            tree[idx]=v;
+            return;
+        }
+        int mid=l+(r-l)/2;
+        if(t<=mid) set(t,v,2*idx+1,l,mid);
+        else set(t,v,2*(idx+1),mid+1,r);
+        tree[idx]=__gcd(tree[2*idx+1],tree[2*(idx+1)]);
+    }
+    void set(int t, int v){
+        set(t,v,0,0,k-1);
+    }
+    int query(int l, int r, int idx, int L, int R){
+        if(l>R || r<L) return 0;
+        if(l<=L && R<=r) return tree[idx];
+        int mid=L+(R-L)/2;
+        return __gcd(query(l,r,2*idx+1,L,mid),query(l,r,2*(idx+1),mid+1,R));
+    }
+    int query(int l, int r){
+        return query(l,r,0,0,k-1);
+    }
+};
 void solve(){
     int n;cin>>n;
-    vi a(n);cin>>a;
+    segtree st(n);
+    for(int i=0,x; i<n; i++){
+        cin>>x;
+        st.set(i,x);
+    }
     int ans=n+1;
-    
+    for(int l=0,r=0; r<n; r++){
+        while(l<=r && st.query(l,r)==1){
+            ans=min(ans,r-l+1);
+            l++;
+        }
+    }
     cout<<(ans==n+1?-1:ans)<<'\n';
 }
 int32_t main(){
-    IOS int t=1;
+    ios::sync_with_stdio(0);cin.tie(nullptr);
+    int t=1;
     // cin>>t;
     while(t--) solve();
 }
