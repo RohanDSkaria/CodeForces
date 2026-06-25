@@ -4,16 +4,15 @@ using namespace std;
 
 void solve(){
     int n;cin>>n;
-    string s;cin>>s;
-    int ans=0,p;
+    int f=-1,s;
     for(int i=0; i<n; i++){
-        if(s[i]=='0'){
-            if(!i || s[i-1]=='1') p=i;
-            if(i==n-1 || s[i+1]=='1') ans+=(i-p+1+(p==0)+(i==n-1))/3;
+        char c;cin>>c;
+        if(c=='B'){
+            if(f==-1) f=i;
+            s=i;
         }
-        else ans++;
     }
-    cout<<ans<<'\n';
+    cout<<s-f+1<<'\n';
 }
 int32_t main(){
     ios::sync_with_stdio(0);cin.tie(nullptr);

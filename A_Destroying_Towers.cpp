@@ -4,15 +4,10 @@ using namespace std;
 
 void solve(){
     int n;cin>>n;
-    string s;cin>>s;
-    int ans=0,p;
-    for(int i=0; i<n; i++){
-        if(s[i]=='0'){
-            if(!i || s[i-1]=='1') p=i;
-            if(i==n-1 || s[i+1]=='1') ans+=(i-p+1+(p==0)+(i==n-1))/3;
-        }
-        else ans++;
-    }
+    vector<int> a(n);
+    for(int& i:a) cin>>i;
+    int ans=a[0];
+    for(int i=1; i<n; i++) ans+=a[i]=min(a[i],a[i-1]);
     cout<<ans<<'\n';
 }
 int32_t main(){
